@@ -48,5 +48,9 @@ not generate `index.html` (that write-up is hand-maintained).
 - `nlp_affective_polarization_dataset.csv` — scored headlines
 - `nlp_audit.py` — fetch + score + metrics (dependency-free)
 - `index.html` — the write-up (hand-maintained)
+- `LICENSE` — MIT (code)
+
+Code is released under the MIT License. Headlines are third-party news content
+(BBC / Al Jazeera / NYT) included for research inspection, not relicensed.
 
 Part of the South Asia Algorithm Watch (SAALWatch) initiative.

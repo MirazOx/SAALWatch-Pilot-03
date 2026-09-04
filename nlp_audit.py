@@ -3,12 +3,6 @@ import xml.etree.ElementTree as ET
 import csv
 import re
 from datetime import datetime
-import ssl
-
-# Bypass SSL for local fetching
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
 
 # SAALWatch Pilot 03: The Platformization of News & Affective Polarization
 # Methodology: Natural Language Processing (NLP) of News Headlines
@@ -37,7 +31,7 @@ for outlet, url in FEEDS.items():
     try:
         print(f"  -> Fetching RSS feed for {outlet}...")
         req = urllib.request.Request(url, headers={'User-Agent': 'SAALWatch-Academic/1.0'})
-        response = urllib.request.urlopen(req, context=ctx).read()
+        response = urllib.request.urlopen(req).read()
         
         root = ET.fromstring(response)
         
@@ -79,7 +73,10 @@ for h in all_headlines:
     
     outlet_stats[out]['total_articles'] += 1
     outlet_stats[out]['total_ais'] += h['ais_score']
-    if h['ais_score'] > 15.0: # Arbitrary threshold for highly sensational
+    # A crude cutoff: >15% of a headline's tokens in the lexicon. It is nearly
+    # unreachable for normal-length headlines, so "high-arousal" counts are low
+    # by construction -- see README for why this limits interpretation.
+    if h['ais_score'] > 15.0:
         outlet_stats[out]['highly_affective'] += 1
 
 for out in outlet_stats:
