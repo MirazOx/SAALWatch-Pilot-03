@@ -238,22 +238,23 @@
 <body>
     <header>
         <h1>Affective Polarization</h1>
-        <p class="subtitle">The Epistemic Supply Chain: Auditing Affective Polarization in Global News Algorithms</p>
+        <p class="subtitle">Do international news headlines lean on high-arousal language? An exploratory lexical pilot (n = 97)</p>
         <div class="meta">
             <div><strong>Date:</strong> September 2026</div>
-            <div><strong>Methodology:</strong> Natural Language Processing (NLP) Lexical Analysis</div>
-            <div><strong>N = </strong> 97 headlines parsed in real-time</div>
+            <div><strong>Method:</strong> Lexical (bag-of-words) headline scoring</div>
+            <div><strong>Sample:</strong> N = 97 headlines, one snapshot</div>
+            <div><strong>Result:</strong> Hypothesis not supported in this sample</div>
         </div>
     </header>
 
-    <h2>1. Theoretical Depth: The Platformization of News</h2>
+    <h2>1. Framing: the platformization of news</h2>
     <div class="theory-box">
-        <strong>Theoretical Framework:</strong> Drawing on Oxford Internet Institute (OII) computational propaganda research and Jose van Dijck's <em>The Platform Society</em>, this audit hypothesizes that legacy media increasingly adopts "algorithmic media logic." To compete for algorithmic visibility on platforms like Meta and X, newsrooms optimize headlines for affective intensity (anger, fear, outrage), thereby degrading the epistemic quality of civic information.
+        <strong>Theoretical framework:</strong> Drawing on Oxford Internet Institute (OII) computational-propaganda research and Jose van Dijck's <em>The Platform Society</em>, this pilot tests a hypothesis: that to compete for algorithmic visibility on platforms like Meta and X, newsrooms increasingly optimise headlines for affective intensity (anger, fear, outrage), degrading the epistemic quality of civic information.
     </div>
-    <p>We built a zero-dependency NLP pipeline in Python to ingest real-time RSS feeds from major international broadcasters. The algorithm tokenizes the headlines, scrubs syntax, and measures the <strong>Affective Intensity Score (AIS)</strong> based on a curated lexicon of high-arousal civic terminology.</p>
+    <p>To probe it, I built a small, zero-dependency Python script that reads live RSS feeds from major international broadcasters. It tokenises each headline, strips syntax, and scores it against a curated lexicon of high-arousal civic terms to produce an <strong>Affective Intensity Score (AIS)</strong>. This is a simple lexical (bag-of-words) method, not a semantic model &mdash; a point that matters for how much weight the result can bear (see Section 3).</p>
 
-    <h2>2. Quantitative Findings: Affective Valuation</h2>
-    <p>Our NLP pipeline evaluated the real-time publishing output of major networks to identify which outlets rely most heavily on algorithmically optimized, high-arousal language to drive click-through rates.</p>
+    <h2>2. Result: the hypothesis is not supported (here)</h2>
+    <p>Across the three outlets sampled, average affective intensity was very low, and &mdash; the number that matters &mdash; <strong>0.0% of headlines crossed the high-arousal threshold at any outlet</strong>. On this sample, then, these international broadcasters show no sign of optimising headlines for affective intensity. The small gaps between outlets below (BBC 1.4%, NYT 0.9%, Al Jazeera 0.3%) are noise at this scale, not a ranking of who is most inflammatory.</p>
     
     <div class="metric-grid">
 
@@ -289,11 +290,12 @@
     <h2>3. Transparency & Epistemic Honesty</h2>
     <div class="honesty-box">
         <strong>Methodological Limitations & Researcher Honesty:</strong>
-        <p style="margin-bottom: 0;">A core tenet of rigorous algorithmic auditing is acknowledging the limitations of the computational tools employed. This pilot utilizes a <em>lexical sentiment approach</em> (bag-of-words), which inherently lacks semantic nuance and struggles with contextual negation (e.g., distinguishing between a legitimate state "crisis" and sensationalized political "chaos").</p>
+        <p style="margin-bottom: 0;">A core tenet of honest measurement is acknowledging the limitations of the tools employed. This pilot uses a <em>lexical (bag-of-words) approach</em>, which lacks semantic nuance and struggles with context and negation (e.g., telling a legitimate state &ldquo;crisis&rdquo; apart from sensationalised political &ldquo;chaos&rdquo;). The near-zero scores may reflect this bluntness as much as genuinely calm headlines.</p>
         <p style="margin-bottom: 0; margin-top: 10px;">Furthermore, this framework currently relies on an English-centric NLP lexicon. Applying this model to South Asian media ecosystems requires training a localized Large Language Model (LLM) on a Bengali linguistic corpus to capture the true epistemic texture of regional disinformation. This pilot proves the structural data pipeline; Phase 2 will demand deep-learning semantic integration.</p>
     </div>
 
-    <h2>4. Raw Data Sample (High Arousal Headlines)</h2>
+    <h2>4. The highest-scoring headlines</h2>
+    <p>Even the top-scoring headlines in the sample score low, and they are flagged only for ordinary hard-news words &mdash; &ldquo;protest,&rdquo; &ldquo;attack,&rdquo; &ldquo;deadly,&rdquo; &ldquo;dead.&rdquo; That is exactly the bag-of-words weakness from Section 3: the lexicon catches routine news vocabulary, not affective framing.</p>
     <table>
         <thead><tr><th>Outlet</th><th>Affective AIS Score</th><th>Headline Text (Tokenized)</th></tr></thead>
         <tbody>
@@ -301,16 +303,16 @@
         </tbody>
     </table>
 
-    <h2 style="margin-top: 45px;">Open Source Reach</h2>
-    <p>This script is designed for extreme reach and reproducibility. Built entirely on standard Python libraries with zero external dependencies, it can be deployed by any grassroots journalism collective globally to monitor the epistemic health of their local media ecosystem.</p>
-    <p>The replication code and live datasets are fully transparent and available for academic peer review via GitHub.</p>
+    <h2 style="margin-top: 45px;">Open Data & Method</h2>
+    <p>The script is small and dependency-free, so it is easy to rerun and adapt. Because it reads live RSS feeds, rerunning it returns current headlines, not the 97 captured here &mdash; the stored dataset is the archived snapshot. As Section 3 notes, the English lexicon and bag-of-words scoring make this a starting scaffold, not a finished measure; a Bengali corpus and a semantic model would be the next step before any claim about South Asian media.</p>
+    <p>The code and the captured dataset are public on GitHub.</p>
 
     <a href="https://github.com/MirazOx/SAALWatch-Pilot-03" class="github-link">View Code & Dataset on GitHub &rarr;</a>
 
 
     <footer style="margin-top: 80px; padding-top: 30px; padding-bottom: 30px; border-top: 2px solid var(--border); font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-light); text-align: center;">
         <p style="margin: 0; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">A SAALWatch Project</p>
-        <p style="margin: 5px 0 0 0; font-weight: 400;">This computational audit was conducted as part of the South Asia Algorithm Watch (SAALWatch) initiative.</p>
+        <p style="margin: 5px 0 0 0; font-weight: 400;">This exploratory pilot was produced for the South Asia Algorithm Watch (SAALWatch) initiative.</p>
     </footer>
 </body>
 </html>

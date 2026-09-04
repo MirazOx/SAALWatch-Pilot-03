@@ -95,101 +95,21 @@ with open(csv_filename, 'w', newline='', encoding='utf-8') as f:
 
 print(f"[+] Processed {len(all_headlines)} headlines. Dataset saved to {csv_filename}")
 
-# Generate Rigorous Academic HTML Report
-html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAALWatch 03: The Epistemic Supply Chain</title>
-    <style>
-        :root {{ --primary: #0F6E56; --secondary: #3C3489; --bg: #f9f8f4; --text: #1a1a18; --border: #e0e0e0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif; line-height: 1.7; color: var(--text); background-color: var(--bg); max-width: 850px; margin: 0 auto; padding: 40px 20px; }}
-        header {{ border-bottom: 2px solid var(--primary); padding-bottom: 25px; margin-bottom: 35px; }}
-        h1 {{ font-size: 2.4rem; margin-bottom: 10px; color: var(--text); letter-spacing: -0.02em; }}
-        h2 {{ font-size: 1.6rem; color: var(--primary); margin-top: 45px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }}
-        h3 {{ font-size: 1.2rem; color: #333; margin-top: 25px; }}
-        .meta {{ color: #555; font-size: 0.95rem; display: flex; gap: 20px; flex-wrap: wrap; background: #fff; padding: 15px; border: 1px solid var(--border); border-radius: 6px; margin-top: 20px; }}
-        .theory-box {{ background: #E1F5EE; border-left: 4px solid var(--primary); padding: 15px 20px; margin: 25px 0; font-size: 0.95rem; }}
-        .honesty-box {{ background: #FAECE7; border-left: 4px solid #993C1D; padding: 15px 20px; margin: 25px 0; font-size: 0.95rem; }}
-        .metric-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 25px; }}
-        .metric-card {{ background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }}
-        .metric-value {{ font-size: 2.2rem; font-weight: bold; color: var(--secondary); margin-bottom: 5px; line-height: 1; }}
-        .metric-label {{ font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #666; font-weight: 600; }}
-        table {{ width: 100%; border-collapse: collapse; margin-top: 25px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
-        th, td {{ border: 1px solid var(--border); padding: 14px; text-align: left; font-size: 0.95rem; }}
-        th {{ background: #f8f9fa; font-weight: 600; color: #333; }}
-        code {{ background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }}
-    </style>
-</head>
-<body>
-    <header>
-        <h1>SAALWatch Pilot 03</h1>
-        <p style="font-size: 1.3rem; color: #444; margin-top: 0; font-weight: 400;">The Epistemic Supply Chain: Auditing Affective Polarization in Global News Algorithms</p>
-        <div class="meta">
-            <div><strong>Date:</strong> {datetime.now().strftime('%B %Y')}</div>
-            <div><strong>Methodology:</strong> Natural Language Processing (NLP) Lexical Analysis</div>
-            <div><strong>N = </strong> {len(all_headlines)} headlines parsed in real-time</div>
-        </div>
-    </header>
-
-    <h2>1. Theoretical Depth: The Platformization of News</h2>
-    <div class="theory-box">
-        <strong>Theoretical Framework:</strong> Drawing on Oxford Internet Institute (OII) computational propaganda research and Jose van Dijck's <em>The Platform Society</em>, this audit hypothesizes that legacy media increasingly adopts "algorithmic media logic." To compete for algorithmic visibility on platforms like Meta and X, newsrooms optimize headlines for affective intensity (anger, fear, outrage), thereby degrading the epistemic quality of civic information.
-    </div>
-    <p>We built a zero-dependency NLP pipeline in Python to ingest real-time RSS feeds from major international broadcasters. The algorithm tokenizes the headlines, scrubs syntax, and measures the <strong>Affective Intensity Score (AIS)</strong> based on a curated lexicon of high-arousal civic terminology.</p>
-
-    <h2>2. Quantitative Findings: Affective Valuation</h2>
-    <p>Our NLP pipeline evaluated the real-time publishing output of major networks to identify which outlets rely most heavily on algorithmically optimized, high-arousal language to drive click-through rates.</p>
-    
-    <div class="metric-grid">
-"""
-
+# --- Report metrics to stdout ----------------------------------------------
+# NOTE: this script intentionally does NOT write index.html. The public
+# dashboard (index.html) is maintained by hand; regenerating it here would
+# overwrite that curated page, which reports this pilot's result honestly:
+# in the captured snapshot, ~0% of headlines crossed the high-arousal
+# threshold -- i.e. the hypothesis was not supported. Treat the figures below
+# as an exploratory, English-lexicon, bag-of-words probe, not an audit.
+print("[=] Average affective intensity by outlet:")
 for outlet, stats in outlet_stats.items():
-    html += f"""
-        <div class="metric-card">
-            <div style="font-size: 1.1rem; font-weight: 600; color: #333; margin-bottom: 15px;">{outlet}</div>
-            <div class="metric-value">{stats['avg_ais']:.1f}%</div>
-            <div class="metric-label">Avg. Affective Intensity (AIS)</div>
-            <div style="margin-top: 15px; font-size: 0.85rem; color: #666;">
-                <strong>{stats['affective_ratio']:.1f}%</strong> of headlines hit high-arousal thresholds.
-            </div>
-        </div>
-    """
+    print(f"      {outlet}: avg AIS {stats['avg_ais']:.1f}% | "
+          f"{stats['affective_ratio']:.1f}% above high-arousal threshold "
+          f"({stats['total_articles']} headlines)")
 
-html += f"""
-    </div>
-
-    <h2>3. Transparency & Epistemic Honesty</h2>
-    <div class="honesty-box">
-        <strong>Methodological Limitations & Researcher Honesty:</strong>
-        <p style="margin-bottom: 0;">A core tenet of rigorous algorithmic auditing is acknowledging the limitations of the computational tools employed. This pilot utilizes a <em>lexical sentiment approach</em> (bag-of-words), which inherently lacks semantic nuance and struggles with contextual negation (e.g., distinguishing between a legitimate state "crisis" and sensationalized political "chaos").</p>
-        <p style="margin-bottom: 0; margin-top: 10px;">Furthermore, this framework currently relies on an English-centric NLP lexicon. Applying this model to South Asian media ecosystems requires training a localized Large Language Model (LLM) on a Bengali linguistic corpus to capture the true epistemic texture of regional disinformation. This pilot proves the structural data pipeline; Phase 2 will demand deep-learning semantic integration.</p>
-    </div>
-
-    <h2>4. Raw Data Sample (High Arousal Headlines)</h2>
-    <table>
-        <thead><tr><th>Outlet</th><th>Affective AIS Score</th><th>Headline Text (Tokenized)</th></tr></thead>
-        <tbody>
-"""
-
-# Sort by AIS score descending and take top 5
-sorted_headlines = sorted(all_headlines, key=lambda x: x['ais_score'], reverse=True)
-for h in sorted_headlines[:5]:
-    html += f"<tr><td>{h['outlet']}</td><td><strong>{h['ais_score']:.1f}%</strong><br><span style='font-size:0.8em; color:#666;'>Hits: {h['hit_words']}</span></td><td>{h['title']}</td></tr>"
-
-html += f"""
-        </tbody>
-    </table>
-
-    <h2 style="margin-top: 45px;">Open Source Reach</h2>
-    <p>This script is designed for extreme reach and reproducibility. Built entirely on standard Python libraries with zero external dependencies, it can be deployed by any grassroots journalism collective globally to monitor the epistemic health of their local media ecosystem.</p>
-    <p>The replication code and live datasets are fully transparent and available for academic peer review via GitHub.</p>
-</body>
-</html>
-"""
-
-with open('index.html', 'w', encoding='utf-8') as f:
-    f.write(html)
-
-print("[+] Rigorous HTML Report generated successfully.")
+top = sorted(all_headlines, key=lambda x: x['ais_score'], reverse=True)[:5]
+print("[=] Highest-scoring headlines (flagged on ordinary hard-news words):")
+for h in top:
+    print(f"      {h['ais_score']:.1f}%  [{h['outlet']}]  {h['title']}  "
+          f"(hits: {h['hit_words'] or 'none'})")
